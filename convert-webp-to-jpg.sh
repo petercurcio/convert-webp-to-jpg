@@ -1,42 +1,5 @@
 #!/bin/bash
 
-function install_deps() {
-    # install dwebp and mogrify utilities from webp and imagemagick, respectively, if not already installed
-    sudo apt install -y webp imagemagick
-}
-
-function convertWebpToPng() {
-    # convert .webp images to .png
-    # image.webp becomes image.webp.png
-    find . -name "*.webp" -exec dwebp {} -o {}.png \;
-}
-
-function convertPngToJpg() {
-    # convert .png images to .jpg
-    # image.webp.png becomes image.webp.jpg?
-    mogrify -format jpg -path . ./*.png
-}
-
-function deleteOriginalWebp() {
-    # Delete original .webp files
-    find . -name "*.webp" -type f -delete
-}
-
-function renameWebpToJpg() {
-    # Rename .webp.jpg to #.jpg
-    for i in *.webp.jpg; do mv "${i}" "${i%.jpg}"; done
-}
-
-function runIt() {
-    install_deps && \
-    convertWebpToPng && \
-    convertPngToJpg && \
-    deleteOriginalWebp && \
-    renameWebpToJpg
-}
-
-#runIt
-
 function convertAllCurrentDir(){ 
     for i in *.webp; do
         # echo "starting conversion..."
